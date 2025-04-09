@@ -1,0 +1,35 @@
+CREATE DATABASE Ecommerce;
+
+USE Ecommerce;
+
+CREATE TABLE Produtos (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+nome_produto VARCHAR(200) NOT NULL,
+categoria VARCHAR(50) NOT NULL,
+preco DECIMAL (8,2) NOT NULL,
+quantidade_estoque INT NOT NULL,
+data_compra DATE NOT NULL
+);
+
+INSERT INTO Produtos (nome_produto, categoria, preco, quantidade_estoque,
+data_compra)
+VALUES
+("IPHONE 16", "ELETRONICO", 4500.00, 30, "2025-03-28"),
+("TV LG 42P", "ELETRONICO", 3000.00, 27, "2025-03-21"),
+("TÊNIS CASUAL", "VESTUARIO", 600.00, 54, "2025-03-07"),
+("CAMISETA", "VESTUARIO", 80.00, 45, "2025-03-08"),
+("BLUSA INVERNO", "VESTUARIO", 300.00, 77, "2025-03-11"),
+("SABÃO EM PÓ", "PRODUTO DE LIMPEZA", 12.99, 200, "2025-03-14"),
+("DETERGENTE LIQUIDO", "PRODUTO DE LIMPEZA", 1.99, 300, "2025-03-15"),
+("AMACIANTE DE ROUPA", "PRODUTO DE LIMPEZA", 7.49, 150, "2025-03-19");
+
+SELECT * FROM Produtos
+WHERE preco > 500.00;
+
+SELECT * FROM Produtos
+WHERE preco <= 500.00;
+
+UPDATE Produtos
+SET preco = 8.49
+WHERE ID = 8;
+
