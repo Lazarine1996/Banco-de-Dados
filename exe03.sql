@@ -1,34 +1,51 @@
-CREATE DATABASE escola;
+CREATE DATABASE db_farmacia_bem_estar;
 
-USE escola;
+USE db_farmacia_bem_estar;
 
-CREATE TABLE alunos (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-nome VARCHAR(200) NOT NULL,
-idade INT NOT NULL,
-curso VARCHAR (100) NOT NULL,
-nota DECIMAL(4,2) NOT NULL,
-data_entrada DATE NOT NULL
+CREATE TABLE tb_categorias (
+id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+nome_categoria VARCHAR(255) NOT NULL,
+descricao TEXT
 );
 
-INSERT INTO alunos (nome, idade, curso, nota, data_entrada)
+CREATE TABLE tb_produtos (
+id_produto INT PRIMARY KEY AUTO_INCREMENT,
+nome_produto VARCHAR(255) NOT NULL,
+descricao VARCHAR(255) NOT NULL, 
+preco DECIMAL (10,2) NOT NULL,
+estoque INT NOT NULL,
+id_categoria INT,
+FOREIGN KEY (id_categoria) REFERENCES tb_categorias(id_categoria)
+);
+
+INSERT INTO tb_categorias (nome_categoria, descricao)
 VALUES
-("NATALIA ZILO", 22, "Administração", 9, "2024-03-28"),
-("GABI GUIMARÃES", 21, "Fisica", 8.7, "2024-03-01"),
-("XHEILA CASTRO", 20, "Direito", 8.3, "2025-01-07"),
-("EKATERINA SOKOLOVA", 20, "Fisica", 6.8, "2023-02-08"),
-("MIREYA LUIS", 21, "Direito", 7.9, "2024-07-11"),
-("PAOLA EGONU", 22, "Administração", 9.6, "2024-03-30"),
-("TIJIANA BOSKOVIC", 23, "Direito", 8.6, "2024-02-15"),
-("ANA CRISTINA", 22,"Fisica", 9.3, "2025-01-19");
+("Medicamentos", "Remédios diversos"),
+("Produtos Cosmeticos", "Cuidado do corpo"),
+("Higiene Pessoal", "Itens de Higiene"),
+("Suplementos", "Suplementos fitness"),
+("Infantil", "Produtos de cuidados infantil");
 
-SELECT * FROM alunos
-WHERE nota > 7.0;
+INSERT INTO tb_produtos (nome_produto, descricao, preco, estoque, id_categoria)
+VALUES
+("Paracetamol", "Antitérmico", 11.50, 50, 1),
+("Shampoo Antiqueda", "Antiqueda", 35.90, 100, 2),
+("Sabonete Liquido", "Sabonete para corpo", 5.50, 200, 3),
+("Vitamina A e B", "Suplemento vitaminico", 49.90, 60, 4),
+("Pomada para Assadura", "Contra Assadura de Crianças", 15.30, 60, 5),
+("Hidratante Corporal", "Hidratante para a pele", 53.00, 60, 2),
+("Dorflex", "Analgésico", 8.99, 160, 1),
+("Protetor Solar", "Proteçao solar", 99.90, 45, 2);
 
-SELECT * FROM alunos
-WHERE nota < 7.0;
+SELECT * FROM tb_produtos WHERE preco > 50.00;
 
-UPDATE alunos
-SET nota = 7.4
-WHERE ID = 4;
+SELECT * FROM tb_produtos WHERE preco BETWEEN 5.00 AND 60.00;
 
+SELECT * FROM tb_produtos WHERE nome_produto LIKE "%C%";
+
+SELECT * FROM tb_produtos INNER JOIN tb_categorias
+ON tb_produto.id_categoria = tb_categorias.id_categoria;
+
+SELECT * FROM tb_produtos INNER JOIN tb_categorias
+ON tb_produtos.id_categoria = tb.categorias.id_categoria
+WHERE tb.categorias.nome_categoria = "Cosmeticos";

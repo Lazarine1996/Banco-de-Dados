@@ -1,31 +1,55 @@
-CREATE DATABASE db_exe01_sql;
+CREATE DATABASE db_generation_game_online;
 
-USE db_exe01_sql;
+USE db_generation_game_online;
 
-CREATE TABLE Colaboradores (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-nome VARCHAR(200) NOT NULL,
-cargo VARCHAR(50) NOT NULL,
-salario DECIMAL (8,2) NOT NULL,
-admissao DATE NOT NULL,
-departamento VARCHAR(20) NOT NULL
+CREATE TABLE tb_classes(
+id_classe INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(255) NOT NULL,
+arma VARCHAR (100) NOT NULL
 );
 
-INSERT INTO Colaboradores(nome, cargo, salario, admissao,
-departamento)
+CREATE TABLE tb_personagens(
+id_personagem INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(255) NOT NULL,
+nivel INT NOT NULL, 
+ataque INT NOT NULL,
+defesa INT NOT NULL,
+id_classe INT,
+FOREIGN KEY (id_classe) REFERENCES tb_classes(id_classe)
+);
+
+INSERT INTO tb_classes(nome, arma)
 VALUES
-("LUAN LAZARINE", "Gerente de RH", 4500.00, "2021-04-28", "RH"),
-("VITORIA CAROLINA", "Analista de Sistema", 3000.00, "2022-06-21", "TI"),
-("PEDRO HENRIQUE", "Assitente Administrativo", 2500.00, "2022-01-07", "ADM"),
-("MATHEUS SILVA", "Auxiliar de RH", 2800.00, "2021-08-08", "RH"),
-("VITOR MANOEL", "Analista de Suporte", 3500.00, "2023-06-19", "TI");
+("Assasino", "Faca"),
+("Guerreiro", "Espada"),
+("Açougueiro", "Facao"),
+("Aqrqueiro", "Arco e Flecha"),
+("Bruxo", "Magia");
 
-SELECT * FROM Colaboradores
-WHERE salario > 2000.00;
+INSERT INTO tb_personagens(nome, nivel, ataque, defesa, id_classe)
+VALUES
+("KAZUYA", 59, 2700, 1900,1),
+("AKUMA", 54, 2100, 3000,2),
+("BOGARD", 57, 3000, 1500,2),
+("FELICIA", 49, 1500, 2000,3),
+("ATENA", 45, 1800, 2100,1),
+("SAMUS", 47, 2300, 2700,2),
+("MEGA MAN", 59, 2300, 3500,3),
+("THOR", 45, 3000, 3200,1);
 
-SELECT * FROM Colaboradores
-WHERE salario < 2000.00;
+SELECT * FROM tb_personagens WHERE ataque > 2000;
 
-UPDATE Colaboradores
-SET salario = 2800.00
-WHERE ID = 3;
+SELECT * FROM tb_personagens WHERE defesa BETWEEN 1000 AND 2000;
+
+SELECT * FROM tb_personagens WHERE nome LIKE "%C%";
+
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON tb_personagens.nome = tb.classes.nome;
+
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON tb_personagens.id_classe = tb.classes.id_classe
+WHERE tb.classes.nome = "Arqueiro";
+
+
+
+
